@@ -1,11 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/curator'
-# require './lib/photograph'
-# require './lib/arist'
 
 class CuratorTest < Minitest::Test
   def setup
+    @file_io = FileIO.new
     @photo_1 = {
       id: "1",
       name: "Rue Mouffetard, Paris (Boy with Bottles)",
@@ -147,6 +146,15 @@ class CuratorTest < Minitest::Test
   end
 
   def test_photographs_taken_by_artists_from_returns_empty_when_no_matches
+    @curator.add_artist(@artist_1)
+    @curator.add_artist(@artist_2)
+    @curator.add_artist(@artist_3)
+
+    @curator.add_photograph(@photo_1)
+    @curator.add_photograph(@photo_2)
+    @curator.add_photograph(@photo_3)
+    @curator.add_photograph(@photo_4)
+
     assert_empty @curator.photographs_taken_by_artists_from("Argentina")
   end
 
@@ -162,5 +170,14 @@ class CuratorTest < Minitest::Test
 
     assert_equal [@moonrise, @twins, @child],
     @curator.photographs_taken_by_artists_from("United States")
+  end
+
+  def test_it_can_load_photos_from_csv
+    @curator.load_photographs('./data/photographs.csv')
+
+    expected = [@rue, @moonrise, @twins, @child]
+    result = @curator.photographs
+
+    assert_equal expected, result
   end
 end
