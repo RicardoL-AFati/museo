@@ -73,24 +73,24 @@ class CuratorTest < Minitest::Test
     @walker = Artist.new({
       id: "4",
       name: "Walker Evans",
-      born: 1903,
-      died: 1975,
+      born: "1903",
+      died: "1975",
       country: "United States"
     })
 
     @manuel = Artist.new({
       id: "5",
       name: "Manuel Alvarez Bravo",
-      born: 1902,
-      died: 2002,
+      born: "1902",
+      died: "2002",
       country: "Mexico"
     })
 
     @bill = Artist.new({
       id: "6",
       name: "Bill Cunningham",
-      born: 1929,
-      died: 2016,
+      born: "1929",
+      died: "2016",
       country: "United States"
     })
 
@@ -205,11 +205,10 @@ class CuratorTest < Minitest::Test
   end
 
   def test_it_can_load_artists_from_csv
-    @curator.load_artist('./data/artists.csv')
+    @curator.load_artists('./data/artists.csv')
 
     expected = [@henri, @ansel, @diane, @walker, @manuel, @bill]
     result = @curator.artists
-
     assert_equal expected, result
   end
 end
