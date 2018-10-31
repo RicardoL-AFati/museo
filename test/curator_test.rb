@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/curator'
-require './lib/photograph'
-require './lib/curator'
+# require './lib/photograph'
+# require './lib/arist'
 
 class CuratorTest < Minitest::Test
   def setup
@@ -13,7 +13,7 @@ class CuratorTest < Minitest::Test
       year: "1954"
     }
 
-    @rue = Photo.new(@photo_1)
+    @rue = Photograph.new(@photo_1)
 
     @photo_2 = {
       id: "2",
@@ -22,7 +22,7 @@ class CuratorTest < Minitest::Test
       year: "1941"
     }
 
-    @moonrise = Photo.new(@photo_2)
+    @moonrise = Photograph.new(@photo_2)
 
     @artist_1 = {
       id: "1",
@@ -59,34 +59,34 @@ class CuratorTest < Minitest::Test
     @curator.add_artist(@artist_1)
     @curator.add_artist(@artist_2)
 
-    expected = [@henri, @ansel]
-    result = @curator.artists
-
-    assert_equal expected, result
     assert_equal @henri, @curator.artists.first
+    assert_equal @ansel, @curator.artists[1]
     assert_equal "Henri Cartier-Bresson", @curator.artists.first.name
   end
 
   def test_it_can_find_artist_by_id
+    @curator.add_artist(@artist_1)
+    @curator.add_artist(@artist_2)
+
     assert_equal @henri,
-    curator.find_artist_by_id("1")
+    @curator.find_artist_by_id("1")
   end
 
   def test_it_can_add_a_photograph
     @curator.add_photograph(@photo_1)
     @curator.add_photograph(@photo_2)
 
-    expected = [@rue, @moonrise]
-    result = @curator.photographs
-
-    assert_equal expected, result
-    assert_equal @rue, @curator.artists.first
+    assert_equal @rue, @curator.photographs.first
+    assert_equal @moonrise, @curator.photographs[1]
     assert_equal "Rue Mouffetard, Paris (Boy with Bottles)",
     @curator.photographs.first.name
   end
 
   def test_it_can_find_photograph_by_id
-    assert_equal @henri,
-    curator.find_artist_by_id("1")
+    @curator.add_photograph(@photo_1)
+    @curator.add_photograph(@photo_2)
+
+    assert_equal @moonrise,
+    @curator.find_photograph_by_id("2")
   end
 end
