@@ -4,7 +4,6 @@ require './lib/curator'
 
 class CuratorTest < Minitest::Test
   def setup
-    @file_io = FileIO.new
     @photo_1 = {
       id: "1",
       name: "Rue Mouffetard, Paris (Boy with Bottles)",
@@ -70,6 +69,30 @@ class CuratorTest < Minitest::Test
     }
 
     @diane = Artist.new(@artist_3)
+
+    @walker = Artist.new({
+      id: "4",
+      name: "Walker Evans",
+      born: 1903,
+      died: 1975,
+      country: "United States"
+    })
+
+    @manuel = Artist.new({
+      id: "5",
+      name: "Manuel Alvarez Bravo",
+      born: 1902,
+      died: 2002,
+      country: "Mexico"
+    })
+
+    @bill = Artist.new({
+      id: "6",
+      name: "Bill Cunningham",
+      born: 1929,
+      died: 2016,
+      country: "United States"
+    })
 
     @curator = Curator.new
   end
@@ -177,6 +200,15 @@ class CuratorTest < Minitest::Test
 
     expected = [@rue, @moonrise, @twins, @child]
     result = @curator.photographs
+
+    assert_equal expected, result
+  end
+
+  def test_it_can_load_artists_from_csv
+    @curator.load_artist('./data/artists.csv')
+
+    expected = [@henri, @ansel, @diane, @walker, @manuel, @bill]
+    result = @curator.artists
 
     assert_equal expected, result
   end
