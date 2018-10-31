@@ -48,4 +48,11 @@ class Curator
     artists = FileIO.load_artists(file)
     artists.each {|artist_hash| add_artist(artist_hash)}
   end
+
+  def photographs_taken_between(date_range)
+    photographs.find_all do |photo|
+      photo.year > date_range.first.to_s &&
+      photo.year < date_range.last.to_s
+    end
+  end
 end
