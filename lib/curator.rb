@@ -55,4 +55,11 @@ class Curator
       photo.year < date_range.last.to_s
     end
   end
+
+  def artists_photographs_by_age(artist)
+    find_photographs_by_artist(artist).reduce({}) do |hash, photo|
+      hash[photo.year.to_i - artist.born.to_i] = photo.name
+      hash
+    end
+  end
 end

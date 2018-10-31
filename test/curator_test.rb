@@ -220,4 +220,15 @@ class CuratorTest < Minitest::Test
 
     assert_equal expected, result
   end
+
+  def test_it_returns_hash_with_artist_age_and_photo
+    expected = {
+      44=>"Identical Twins, Roselle, New Jersey",
+      39=>"Child with Toy Hand Grenade in Central Park"
+    }
+
+    result = @curator.artists_photographs_by_age(@diane)
+
+    assert_equal expected, result
+  end
 end
