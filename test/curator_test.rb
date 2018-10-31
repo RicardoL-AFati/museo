@@ -24,6 +24,24 @@ class CuratorTest < Minitest::Test
 
     @moonrise = Photograph.new(@photo_2)
 
+    @photo_3 = {
+      id: "3",
+      name: "Identical Twins, Roselle, New Jersey",
+      artist_id: "3",
+      year: "1967"
+    }
+
+    @twins = Photograph.new(@photo_3)
+
+    @photo_4 = {
+      id: "4",
+      name: "Child with Toy Hand Grenade in Central Park",
+      artist_id: "3",
+      year: "1962"
+    }
+
+    @child = Photograph.new(@photo_4)
+
     @artist_1 = {
       id: "1",
       name: "Henri Cartier-Bresson",
@@ -43,6 +61,16 @@ class CuratorTest < Minitest::Test
     }
 
     @ansel = Artist.new(@artist_2)
+
+    @artist_3 = {
+      id: "3",
+      name: "Diane Arbus",
+      born: "1923",
+      died: "1971",
+      country: "United States"
+    }
+
+    @diane = Artist.new(@artist_3)
 
     @curator = Curator.new
   end
@@ -88,5 +116,20 @@ class CuratorTest < Minitest::Test
 
     assert_equal @moonrise,
     @curator.find_photograph_by_id("2")
+  end
+
+  def test_it_find_photographs_by_artist
+    @curator.add_artist(@artist_2)
+    @curator.add_artist(@artist_3)
+
+    @curator.add_photograph(@photo_2)
+    @curator.add_photograph(@photo_3)
+    @curator.add_photograph(@photo_4)
+
+    diane = @curator.find_artist_by_id("3")
+    expected = [@twins, @child]
+    result = @curator.find_photographs_by_artist(diane)
+
+    assert_equal expected, result
   end
 end
