@@ -43,9 +43,9 @@ class Curator
     photos = FileIO.load_photographs(file)
     photos.each {|photo_hash| add_photograph(photo_hash)}
   end
-  # 
-  # def load_artists(file)
-  #   photos = FileIO.load_photographs(file)
-  #   photos.each {|photo_hash| add_photograph(photo_hash)}
-  # end
+
+  def load_artists(file)
+    artists = FileIO.load_artists(file)
+    artists.each {|artist_hash| add_artist(artist_hash)}
+  end
 end
