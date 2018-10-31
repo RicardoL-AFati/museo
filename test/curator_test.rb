@@ -211,4 +211,13 @@ class CuratorTest < Minitest::Test
     result = @curator.artists
     assert_equal expected, result
   end
+
+  def test_it_finds_photographs_taken_between_dates
+    @curator.load_photographs('./data/photographs.csv')
+
+    expected = [@rue, @child]
+    result = @curator.photographs_taken_between(1950..1965)
+
+    assert_equal expected, result
+  end
 end
